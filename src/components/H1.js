@@ -1,7 +1,7 @@
-const H1 = () => {
+const H1 = ({children}) => {
   return (
-    <h1>
-      H1
+    <h1 className="font-medium text-3xl text-center">
+      {children}
     </h1>
   )
 }

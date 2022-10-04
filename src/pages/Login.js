@@ -3,21 +3,26 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Button from "../components/Button"
 import { getRandomUser } from '../api/randomUser'
-// import { UserContextProvider } from "../contexts/User"
+import { UserContext } from "../contexts/User"
+import { useNavigate } from 'react-router-dom'
+import { useContext } from "react"
 
 
 const Login = () => {
-   
+  const navigate = useNavigate()
+  const { setUser } = useContext(UserContext)
 
   const formik = useFormik({
     initialValues:{
-      email:"sd@qsd.fdd",
-      password:"SSdd22@ssss"
+      email:"",
+      password:""
     },
     onSubmit: async (values) => {
       const data = await getRandomUser()
       console.log(values)
       console.log(data.results[0])
+      navigate('/profile')
+      setUser(data.results[0])
     },
     validationSchema: Yup.object().shape({
       email: Yup.string()
