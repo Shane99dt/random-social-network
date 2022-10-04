@@ -7,6 +7,7 @@ import H3 from "../components/H3"
 import FriendCard from "../components/FriendCard"
 import Button from "../components/Button"
 import { getRandomUser } from "../api/randomUser"
+import H2 from "../components/H2"
 
 const Profile = () => {
 
@@ -27,25 +28,36 @@ const Profile = () => {
 
   const fetchRandomFriend = async () => {
     const data = await getRandomUser()
-    setFriends(data.results[0])
+    friends.push(data.results[0])
   }
+
 
   if(!user){
     return <p>Loading...</p>
   }
   return (
     <div>
-      <div className="mx-auto"><img src={user.picture.large ? (user.picture.large):("https://i.stack.imgur.com/l60Hf.png")} alt="default" className="rounded-full" width="150px"/></div>
-      <div>
+      <div className="flex items-center justify-center mt-10">
+        <img src={user.picture.large ? (user.picture.large):("https://i.stack.imgur.com/l60Hf.png")} alt="default" className="rounded-full" width="150px"/>
+      </div>
+      <div className="text-center">
         <H3>Hi, My name is</H3>
         <H1>{user.name.first} {user.name.last}</H1>
       </div>
       <div className="mt-10">
-        <H3>Friends</H3>
+        <H2>Friends</H2>
         {!friends ? (
           <Button text={"Add a friend"} handleClick={fetchRandomFriend} />
-        ):(
-          <FriendCard name={"ASA"}/>
+          ):(
+          <>
+            <Button text={"Add a friend"} handleClick={fetchRandomFriend} />
+            <div className="sm-w-[90%] w-full flex flex-row flex-wrap gap-3 justify-center mt-5">
+              {friends.map((friend, i) => {
+                return(<FriendCard key={i} name={friend.name.first} image={friend.picture.large}/>)
+              })}
+            </div>
+            {console.log(friends)}
+          </>
         )}
       </div>
     </div>

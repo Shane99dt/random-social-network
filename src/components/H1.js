@@ -1,6 +1,6 @@
 const H1 = ({children}) => {
   return (
-    <h1 className="font-medium text-3xl text-center">
+    <h1 className="font-medium text-3xl">
       {children}
     </h1>
   )
