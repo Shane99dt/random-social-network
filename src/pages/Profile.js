@@ -6,7 +6,7 @@ import H1 from "../components/H1"
 import H3 from "../components/H3"
 import FriendCard from "../components/FriendCard"
 import Button from "../components/Button"
-import { getRandomUser } from "../api/randomUser"
+import { getRandomFriends, getRandomUser } from "../api/randomUser"
 import H2 from "../components/H2"
 
 const Profile = () => {
@@ -20,7 +20,7 @@ const Profile = () => {
     if(!user){
       navigate('/')
     }
-  }, [user])
+  }, [navigate, user])
 
   useEffect(() => {
     fetchRandomFriend()
@@ -28,7 +28,8 @@ const Profile = () => {
 
   const fetchRandomFriend = async () => {
     const data = await getRandomUser()
-    friends.push(data.results[0])
+    const friendsArray = [...friends, data.results[0]]
+    setFriends(friendsArray)
   }
 
 
@@ -46,7 +47,7 @@ const Profile = () => {
       </div>
       <div className="mt-10">
         <H2>Friends</H2>
-        {!friends ? (
+        {friends.length === 0 ? (
           <Button text={"Add a friend"} handleClick={fetchRandomFriend} />
           ):(
           <>
