@@ -22,10 +22,6 @@ const Profile = () => {
     }
   }, [navigate, user])
 
-  useEffect(() => {
-    fetchRandomFriend()
-  }, [])
-
   const fetchRandomFriend = async () => {
     const data = await getRandomUser()
     const friendsArray = [...friends, data.results[0]]
